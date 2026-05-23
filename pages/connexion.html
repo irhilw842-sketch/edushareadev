@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Connexion Admin - EduShare</title>
+    <title>Connexion Admin – EduShare</title>
     <link rel="icon" type="image/svg+xml" href="../data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📚</text></svg>">
     <link rel="stylesheet" href="../css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
@@ -11,17 +11,79 @@
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
     <script src="../firebase.js"></script>
+    <style>
+        .auth-section { background: linear-gradient(135deg, var(--bg) 0%, var(--primary-light) 100%); }
+
+        .auth-card {
+            animation: fadeUp .4s ease both;
+        }
+        @keyframes fadeUp {
+            from { opacity:0; transform:translateY(24px); }
+            to   { opacity:1; transform:translateY(0); }
+        }
+
+        /* password toggle */
+        .pw-wrapper { position:relative; }
+        .pw-toggle {
+            position:absolute; right:14px; top:50%;
+            transform:translateY(-50%);
+            background:none; border:none; cursor:pointer;
+            color:var(--text-light); font-size:1rem;
+            transition:color .2s;
+        }
+        .pw-toggle:hover { color:var(--primary); }
+
+        /* error box */
+        #loginError {
+            display:none;
+            padding:12px 16px;
+            background:#FEE2E2;
+            color:#DC2626;
+            border:1px solid #FECACA;
+            border-radius:var(--radius-sm);
+            margin-bottom:20px;
+            font-size:.9rem;
+            font-weight:500;
+            animation:shake .35s ease;
+        }
+        @keyframes shake {
+            0%,100%{transform:translateX(0)}
+            20%,60%{transform:translateX(-6px)}
+            40%,80%{transform:translateX(6px)}
+        }
+
+        /* info box */
+        .info-box {
+            background:var(--primary-light);
+            border:1px solid rgba(37,99,235,.15);
+            border-radius:var(--radius-sm);
+            padding:12px 16px;
+            font-size:.85rem;
+            color:var(--text);
+            margin-top:20px;
+            line-height:1.6;
+        }
+        .info-box i { color:var(--primary); margin-right:6px; }
+
+        /* subject badges */
+        .subject-badges {
+            display:flex; flex-wrap:wrap; gap:6px; margin-top:12px;
+        }
+        .subject-badge {
+            font-size:.72rem; font-weight:600;
+            padding:3px 10px; border-radius:50px;
+            background:#F1F5F9; color:var(--text-light);
+            border:1px solid var(--border);
+        }
+    </style>
 </head>
 <body>
     <nav class="navbar">
         <div class="container nav-container">
             <a href="../index.html" class="logo">
-                <i class="fas fa-graduation-cap"></i>
-                <span>EduShare</span>
+                <i class="fas fa-graduation-cap"></i><span>EduShare</span>
             </a>
-            <button class="menu-toggle" id="menuToggle" aria-label="Menu">
-                <i class="fas fa-bars"></i>
-            </button>
+            <button class="menu-toggle" id="menuToggle"><i class="fas fa-bars"></i></button>
             <ul class="nav-links" id="navLinks">
                 <li><a href="../index.html">Accueil</a></li>
                 <li><a href="matieres.html">Matières</a></li>
@@ -35,62 +97,124 @@
     <section class="auth-section">
         <div class="container">
             <div class="auth-card">
-                <div style="text-align: center; margin-bottom: 8px;">
-                    <i class="fas fa-shield-alt" style="font-size: 2.4rem; color: var(--primary);"></i>
+                <div style="text-align:center;margin-bottom:8px">
+                    <i class="fas fa-shield-alt" style="font-size:2.4rem;color:var(--primary)"></i>
                 </div>
-                <h2 style="text-align: center;">Connexion Administrateur</h2>
-                <p class="subtitle" style="text-align: center;">Accès réservé aux administrateurs des matières</p>
-                <div id="loginError" style="display: none; padding: 12px 16px; background: #FEE2E2; color: #DC2626; border-radius: var(--radius-sm); margin-bottom: 20px; font-size: 0.9rem; font-weight: 500;"></div>
-                <form id="loginForm">
+                <h2 style="text-align:center">Connexion Administrateur</h2>
+                <p class="subtitle" style="text-align:center">
+                    Accès réservé aux administrateurs des matières
+                </p>
+
+                <!-- Error / redirect reason -->
+                <div id="loginError"></div>
+
+                <form id="loginForm" novalidate>
                     <div class="form-group">
                         <label for="email">Email administrateur</label>
-                        <input type="email" id="email" placeholder="admin@email.com" required autocomplete="email">
+                        <input type="email" id="email" placeholder="admin@email.com"
+                               required autocomplete="email">
                     </div>
+
                     <div class="form-group">
                         <label for="password">Mot de passe</label>
-                        <input type="password" id="password" placeholder="Mot de passe" required autocomplete="current-password">
+                        <div class="pw-wrapper">
+                            <input type="password" id="password" placeholder="••••••••"
+                                   required autocomplete="current-password"
+                                   style="padding-right:42px">
+                            <button type="button" class="pw-toggle" id="pwToggle"
+                                    title="Afficher / masquer le mot de passe">
+                                <i class="fas fa-eye" id="pwIcon"></i>
+                            </button>
+                        </div>
                     </div>
+
                     <button type="submit" id="loginBtn" class="btn btn-primary btn-block">
                         <i class="fas fa-sign-in-alt"></i> Se connecter
                     </button>
                 </form>
-                <div style="margin-top: 24px; padding-top: 24px; border-top: 1px solid var(--border);">
-                    <p style="font-size: 0.85rem; color: var(--text-light); text-align: center;">
-                        <i class="fas fa-info-circle"></i>
-                        Cette plateforme est réservée aux administrateurs.<br>
-                        Les comptes sont créés manuellement dans Firebase.
-                    </p>
+
+                <div class="info-box">
+                    <i class="fas fa-info-circle"></i>
+                    Chaque admin n'accède <strong>qu'à sa propre matière</strong>.
+                    Les comptes sont créés manuellement dans Firebase par le super-admin.
+                    <div class="subject-badges">
+                        <span class="subject-badge">Mathématiques</span>
+                        <span class="subject-badge">Français</span>
+                        <span class="subject-badge">Anglais</span>
+                        <span class="subject-badge">SVT</span>
+                        <span class="subject-badge">Informatique</span>
+                        <span class="subject-badge">Physique</span>
+                        <span class="subject-badge">Tech. Industrielle</span>
+                        <span class="subject-badge">Primaire</span>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
+    <script src="../js/main.js"></script>
     <script>
+    /* Show any error passed from a redirect */
+    (function () {
+        const reason = sessionStorage.getItem('loginError');
+        if (reason) {
+            showError(reason);
+            sessionStorage.removeItem('loginError');
+        }
+    })();
+
+    /* Password visibility toggle */
+    document.getElementById('pwToggle').addEventListener('click', () => {
+        const pw   = document.getElementById('password');
+        const icon = document.getElementById('pwIcon');
+        const show = pw.type === 'password';
+        pw.type    = show ? 'text' : 'password';
+        icon.className = show ? 'fas fa-eye-slash' : 'fas fa-eye';
+    });
+
+    /* Login form */
     document.getElementById('loginForm').addEventListener('submit', async (e) => {
         e.preventDefault();
-        const email = document.getElementById('email').value;
-        const password = document.getElementById('password').value;
-        const btn = document.getElementById('loginBtn');
-        const errorEl = document.getElementById('loginError');
+        const email  = document.getElementById('email').value.trim();
+        const pwd    = document.getElementById('password').value;
+        const btn    = document.getElementById('loginBtn');
+        const errEl  = document.getElementById('loginError');
 
-        errorEl.style.display = 'none';
+        errEl.style.display = 'none';
+
+        /* Basic client validation */
+        if (!email) { showError('Veuillez saisir votre adresse email.'); return; }
+        if (!pwd)   { showError('Veuillez saisir votre mot de passe.'); return; }
+
         btn.disabled = true;
-        btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Connexion...';
+        btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Connexion…';
 
-        const result = await signInAdmin(email, password);
+        const result = await signInAdmin(email, pwd);
 
         if (result.success) {
-            btn.innerHTML = '<i class="fas fa-check"></i> Redirection...';
-            window.location.href = result.adminData.subject
-                ? `admin/${result.adminData.subject}.html`
-                : '../index.html';
+            btn.innerHTML = '<i class="fas fa-check"></i> Redirection…';
+            btn.style.background = '#22C55E';
+            btn.style.borderColor = '#22C55E';
+            window.location.replace(
+                result.adminData?.subject
+                    ? `admin/${result.adminData.subject}.html`
+                    : '../index.html'
+            );
         } else {
-            errorEl.textContent = result.error;
-            errorEl.style.display = 'block';
+            showError(result.error);
             btn.disabled = false;
             btn.innerHTML = '<i class="fas fa-sign-in-alt"></i> Se connecter';
+            btn.style.background = '';
+            btn.style.borderColor = '';
         }
     });
+
+    function showError(msg) {
+        const el = document.getElementById('loginError');
+        el.textContent   = msg;
+        el.style.display = 'block';
+        el.scrollIntoView({ behavior:'smooth', block:'nearest' });
+    }
     </script>
 </body>
 </html>
