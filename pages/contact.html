@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact - EduShare</title>
+    <link rel="icon" type="image/svg+xml" href="../data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📚</text></svg>">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container nav-container">
+            <a href="../index.html" class="logo">
+                <i class="fas fa-graduation-cap"></i>
+                <span>EduShare</span>
+            </a>
+            <button class="menu-toggle" id="menuToggle" aria-label="Menu">
+                <i class="fas fa-bars"></i>
+            </button>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="../index.html">Accueil</a></li>
+                <li><a href="matieres.html">Matières</a></li>
+                <li><a href="apropos.html">À propos</a></li>
+                <li><a href="contact.html" class="active">Contact</a></li>
+                <li><a href="connexion.html" class="btn btn-primary btn-sm">Espace Admin</a></li>
+                
+            </ul>
+        </div>
+    </nav>
+
+    <section class="page-hero">
+        <div class="container">
+            <span class="badge">Contact</span>
+            <h1>Contactez-nous</h1>
+            <p>Une question ? Une suggestion ? On est là pour vous</p>
+        </div>
+    </section>
+
+    <section class="section bg-white">
+        <div class="container">
+            <div class="contact-grid">
+                <div>
+                    <form>
+                        <div class="form-group">
+                            <label for="nom">Nom complet</label>
+                            <input type="text" id="nom" placeholder="Votre nom" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" placeholder="votre@email.com" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="sujet">Sujet</label>
+                            <select id="sujet">
+                                <option value="question">Question générale</option>
+                                <option value="bug">Signaler un problème</option>
+                                <option value="suggestion">Suggestion</option>
+                                <option value="admin">Demande d'administration</option>
+                                <option value="autre">Autre</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="message">Message</label>
+                            <textarea id="message" placeholder="Écrivez votre message..." required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-block">
+                            <i class="fas fa-paper-plane"></i> Envoyer le message
+                        </button>
+                    </form>
+                </div>
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <i class="fas fa-envelope"></i>
+                        <div>
+                            <h4>Email</h4>
+                            <p>contact@edushare.fr</p>
+                            <p>support@edushare.fr</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <div>
+                            <h4>Localisation</h4>
+                            <p>Maroc</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-clock"></i>
+                        <div>
+                            <h4>Disponibilité</h4>
+                            <p>Lundi - Vendredi : 9h - 18h</p>
+                            <p>Réponse sous 24h</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-share-alt"></i>
+                        <div>
+                            <h4>Suivez-nous</h4>
+                            <div class="social-links" style="margin-top: 8px;">
+                                <a href="#" style="background: var(--primary-light); color: var(--primary);"><i class="fab fa-facebook"></i></a>
+                                <a href="#" style="background: var(--primary-light); color: var(--primary);"><i class="fab fa-instagram"></i></a>
+                                <a href="#" style="background: var(--primary-light); color: var(--primary);"><i class="fab fa-twitter"></i></a>
+                                <a href="#" style="background: var(--primary-light); color: var(--primary);"><i class="fab fa-linkedin"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <div class="logo">
+                        <i class="fas fa-graduation-cap"></i>
+                        <span>EduShare</span>
+                    </div>
+                    <p>Plateforme de partage de ressources éducatives entre étudiants.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h4>Matières</h4>
+                    <ul>
+                        <li><a href="matiere-math.html">Mathématiques</a></li>
+                        <li><a href="matiere-francais.html">Français</a></li>
+                        <li><a href="matiere-anglais.html">Anglais</a></li>
+                        <li><a href="matiere-svt.html">SVT</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Liens utiles</h4>
+                    <ul>
+                        <li><a href="apropos.html">À propos</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                        <li><a href="faq.html">FAQ</a></li>
+                        <li><a href="conditions.html">Conditions d'utilisation</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Contact</h4>
+                    <ul>
+                        <li><i class="fas fa-envelope"></i> contact@edushare.fr</li>
+                        <li><i class="fas fa-map-marker-alt"></i> Maroc</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 EduShare. Tous droits réservés.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../js/main.js"></script>
+</body>
+</html>

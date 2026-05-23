@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mathématiques - EduShare</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container nav-container">
+            <a href="../index.html" class="logo"><i class="fas fa-graduation-cap"></i><span>EduShare</span></a>
+            <button class="menu-toggle" id="menuToggle"><i class="fas fa-bars"></i></button>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="../index.html">Accueil</a></li>
+                <li><a href="matieres.html" class="active">Matières</a></li>
+                <li><a href="apropos.html">À propos</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <li><a href="connexion.html" class="btn btn-primary btn-sm">Espace Admin</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <section class="subjects-hero">
+        <div class="container">
+            <span class="badge" style="background: rgba(255,255,255,0.15); color: white; border-color: rgba(255,255,255,0.2);">Matière</span>
+            <h1><i class="fas fa-flask"></i> Mathématiques</h1>
+            <p>Algèbre, analyse, géométrie, probabilités et statistiques</p>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <div class="search-bar"><i class="fas fa-search"></i><input type="text" id="searchInput" placeholder="Rechercher dans Mathématiques..." onkeyup="filterFiles()"></div>
+            <div id="filesContainer">
+                <div class="loading"><i class="fas fa-spinner fa-spin"></i> Chargement des ressources...</div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <div class="logo"><i class="fas fa-graduation-cap"></i><span>EduShare</span></div>
+                    <p>Plateforme de partage de ressources éducatives.</p>
+                </div>
+                <div class="footer-col">
+                    <h4>Liens utiles</h4>
+                    <ul>
+                        <li><a href="apropos.html">À propos</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                        <li><a href="faq.html">FAQ</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom"><p>&copy; 2026 EduShare. Tous droits réservés.</p></div>
+        </div>
+    </footer>
+
+    <script src="../js/main.js"></script>
+    <script>
+        const SUBJECT = 'physique';
+        async function loadSubjectFiles() {
+            const container = document.getElementById('filesContainer');
+            try {
+                const res = await fetch(`/api/upload?subject=${SUBJECT}`);
+                const data = await res.json();
+                if (!data.files || data.files.length === 0) {
+                    container.innerHTML = '<div class="empty-state"><i class="fas fa-folder-open"></i><p>Aucune ressource disponible pour le moment.</p></div>';
+                    return;
+                }
+                const grouped = {};
+                data.files.forEach(f => {
+                    const folder = f.folder || 'General';
+                    if (!grouped[folder]) grouped[folder] = [];
+                    grouped[folder].push(f);
+                });
+                let html = '';
+                for (const [folder, files] of Object.entries(grouped)) {
+                    html += `<div class="folder-section"><h3 class="folder-title"><i class="fas fa-folder" style="color: var(--primary);"></i> ${folder}</h3>`;
+                    files.sort((a, b) => new Date(b.uploadedAt) - new Date(a.uploadedAt));
+                    files.forEach(f => {
+                        const ext = f.fileName.split('.').pop().toLowerCase();
+                        const iconMap = {pdf:'fa-file-pdf',doc:'fa-file-word',docx:'fa-file-word',mp4:'fa-video',avi:'fa-video',png:'fa-image',jpg:'fa-image',jpeg:'fa-image',gif:'fa-image',svg:'fa-image',xls:'fa-file-excel',xlsx:'fa-file-excel',ppt:'fa-file-powerpoint',pptx:'fa-file-powerpoint',zip:'fa-file-archive',rar:'fa-file-archive'};
+                        const icon = iconMap[ext] || 'fa-file';
+                        const cls = {pdf:'pdf',doc:'doc',docx:'doc',mp4:'video',avi:'video',png:'image',jpg:'image',jpeg:'image',gif:'image',svg:'image'}[ext] || 'doc';
+                        const size = f.size ? (f.size < 1048576 ? (f.size/1024).toFixed(1)+' Ko' : (f.size/1048576).toFixed(1)+' Mo') : '';
+                        const date = f.uploadedAt ? new Date(f.uploadedAt).toLocaleDateString('fr-FR') : '';
+                        html += `<div class="file-card"><div class="file-icon ${cls}"><i class="fas ${icon}"></i></div><div class="file-info"><h4>${f.fileName}</h4><span>${size ? size+' • ' : ''}${date}</span></div><a href="${f.url}" target="_blank" class="file-download"><i class="fas fa-download"></i> Télécharger</a></div>`;
+                    });
+                    html += '</div>';
+                }
+                container.innerHTML = html;
+            } catch(e) {
+                container.innerHTML = '<div class="empty-state"><i class="fas fa-exclamation-triangle" style="color: #DC2626;"></i><p>Erreur de chargement.</p></div>';
+            }
+        }
+        document.addEventListener('DOMContentLoaded', loadSubjectFiles);
+    </script>
+    <style>
+        .folder-section { margin-bottom: 32px; }
+        .folder-title { font-size: 1.15rem; font-weight: 700; color: var(--navy); margin-bottom: 12px; padding-bottom: 8px; border-bottom: 2px solid var(--border); }
+        .loading, .empty-state { text-align: center; padding: 60px 20px; color: var(--text-light); }
+        .empty-state i { font-size: 3rem; margin-bottom: 16px; color: var(--border); display: block; }
+    </style>
+</body>
+</html>

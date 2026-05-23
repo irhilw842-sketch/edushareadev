@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panneau Admin - EduShare</title>
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+    <script src="../../firebase.js"></script>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container nav-container">
+            <a href="../../index.html" class="logo">
+                <i class="fas fa-graduation-cap"></i>
+                <span>EduShare</span>
+            </a>
+            <div style="display: flex; align-items: center; gap: 12px;">
+                <span style="font-size: 0.85rem; color: var(--text-light);" id="adminName"></span>
+                <button id="logoutBtn" class="btn btn-outline btn-sm"><i class="fas fa-sign-out-alt"></i> Déconnexion</button>
+            </div>
+        </div>
+    </nav>
+
+    <section style="padding: 100px 0 40px; background: var(--navy); color: white;">
+        <div class="container">
+            <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 8px;">
+                <span class="badge" style="background: rgba(255,255,255,0.15); color: white; border-color: rgba(255,255,255,0.2);">
+                    <i class="fas fa-shield-alt"></i> Panneau d'administration
+                </span>
+            </div>
+            <h1 style="font-size: 2.2rem; font-weight: 800; display: flex; align-items: center; gap: 12px;">
+                <i class="fas" id="subjectIcon" style="color: var(--primary);"></i>
+                <span id="subjectName"></span>
+            </h1>
+            <p style="color: rgba(255,255,255,0.7); margin-top: 8px;">Gérez les fichiers et dossiers de votre matière</p>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <div id="message" class="message" style="display: none;"></div>
+
+            <div class="admin-tip" style="margin-bottom: 32px;">
+                <i class="fas fa-info-circle"></i>
+                <p>Seuls les fichiers que vous uploadez ici apparaissent sur la page publique de votre matière. Utilisez des dossiers pour organiser vos ressources.</p>
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 32px;">
+                <div style="background: var(--bg-white); border-radius: var(--radius); padding: 28px; border: 1px solid var(--border); box-shadow: var(--shadow);">
+                    <h3 style="font-size: 1.2rem; font-weight: 700; color: var(--navy); margin-bottom: 20px;">
+                        <i class="fas fa-upload" style="color: var(--primary);"></i> Uploader un fichier
+                    </h3>
+                    <form id="uploadForm">
+                        <div class="form-group">
+                            <label for="folderInput">Dossier</label>
+                            <input type="text" id="folderInput" placeholder="Ex: Cours, Examens, Résumés..." value="General">
+                        </div>
+                        <div class="form-group">
+                            <label for="fileInput">Fichier</label>
+                            <input type="file" id="fileInput" required>
+                        </div>
+                        <button type="submit" id="submitBtn" class="btn btn-primary btn-block">
+                            <i class="fas fa-upload"></i> Uploader le fichier
+                        </button>
+                        <div id="uploadProgress" style="display: none; margin-top: 12px; text-align: center; color: var(--text-light);">
+                            <i class="fas fa-spinner fa-spin"></i> <span>Upload en cours...</span>
+                        </div>
+                    </form>
+                </div>
+
+                <div style="background: var(--bg-white); border-radius: var(--radius); padding: 28px; border: 1px solid var(--border); box-shadow: var(--shadow);">
+                    <h3 style="font-size: 1.2rem; font-weight: 700; color: var(--navy); margin-bottom: 20px;">
+                        <i class="fas fa-link" style="color: var(--primary);"></i> Lien de la page publique
+                    </h3>
+                    <p style="color: var(--text-light); margin-bottom: 16px;">Partagez ce lien avec les étudiants pour qu'ils accèdent aux ressources :</p>
+                    <a href="#" id="publicLink" target="_blank" style="display: block; padding: 12px 16px; background: var(--bg); border-radius: var(--radius-sm); color: var(--primary); font-weight: 600; word-break: break-all; border: 1px solid var(--border);"></a>
+                </div>
+            </div>
+
+            <div style="margin-top: 48px;">
+                <h3 style="font-size: 1.3rem; font-weight: 700; color: var(--navy); margin-bottom: 20px;">
+                    <i class="fas fa-files" style="color: var(--primary);"></i> Fichiers uploadés
+                </h3>
+                <div id="filesContainer"></div>
+            </div>
+        </div>
+    </section>
+
+    <style>
+        .message {
+            padding: 14px 20px;
+            border-radius: var(--radius-sm);
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+        .message-success { background: var(--success-light); color: #15803D; border: 1px solid #BBF7D0; }
+        .message-error { background: #FEE2E2; color: #DC2626; border: 1px solid #FECACA; }
+        .loading, .empty-state {
+            text-align: center;
+            padding: 48px 20px;
+            color: var(--text-light);
+        }
+        .empty-state i { font-size: 3rem; margin-bottom: 16px; color: var(--border); display: block; }
+        .loading i { font-size: 1.5rem; }
+        .folder-section { margin-bottom: 32px; }
+        .folder-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--navy);
+            margin-bottom: 12px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid var(--border);
+        }
+        .file-count { font-weight: 400; color: var(--text-light); font-size: 0.9rem; }
+        .file-delete {
+            padding: 8px 12px;
+            background: #FEE2E2;
+            color: #DC2626;
+            border: none;
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: var(--transition);
+        }
+        .file-delete:hover { background: #DC2626; color: white; }
+        @media (max-width: 768px) {
+            [style*="grid-template-columns: 1fr 1fr"] { grid-template-columns: 1fr !important; }
+        }
+    </style>
+
+    <script src="../../js/admin.js"></script>
+    <script>
+        const subjectId = document.location.pathname.split('/').pop().replace('.html', '');
+        document.addEventListener('DOMContentLoaded', () => {
+            const publicLink = document.getElementById('publicLink');
+            publicLink.textContent = window.location.origin + `/pages/matiere-${subjectId}.html`;
+            publicLink.href = publicLink.textContent;
+            initAdminPage(subjectId);
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Matières - EduShare</title>
+    <link rel="icon" type="image/svg+xml" href="../data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📚</text></svg>">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container nav-container">
+            <a href="../index.html" class="logo">
+                <i class="fas fa-graduation-cap"></i>
+                <span>EduShare</span>
+            </a>
+            <button class="menu-toggle" id="menuToggle" aria-label="Menu">
+                <i class="fas fa-bars"></i>
+            </button>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="../index.html">Accueil</a></li>
+                <li><a href="matieres.html" class="active">Matières</a></li>
+                <li><a href="apropos.html">À propos</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <li><a href="connexion.html" class="btn btn-primary btn-sm">Espace Admin</a></li>
+                
+            </ul>
+        </div>
+    </nav>
+
+    <section class="subjects-hero">
+        <div class="container">
+            <h1>Explorer les matières</h1>
+            <p>Accédez à toutes les ressources organisées par matière et par thème</p>
+            <div class="search-bar" style="margin-top: 32px;">
+                <i class="fas fa-search"></i>
+                <input type="text" placeholder="Rechercher une matière, un cours, un fichier...">
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <div class="grid-4">
+                <a href="matiere-math.html" class="subject-card">
+                    <div class="subject-icon" style="background: #EEF2FF;">
+                        <i class="fas fa-square-root-variable" style="color: #2563EB;"></i>
+                    </div>
+                    <h3>Mathématiques</h3>
+                    <p>Algèbre, analyse, géométrie, probabilités...</p>
+                    <span class="count">124 ressources</span>
+                </a>
+                <a href="matiere-francais.html" class="subject-card">
+                    <div class="subject-icon" style="background: #FCE7F3;">
+                        <i class="fas fa-language" style="color: #DB2777;"></i>
+                    </div>
+                    <h3>Français</h3>
+                    <p>Grammaire, littérature, rédaction...</p>
+                    <span class="count">89 ressources</span>
+                </a>
+                <a href="matiere-anglais.html" class="subject-card">
+                    <div class="subject-icon" style="background: #DBEAFE;">
+                        <i class="fas fa-globe" style="color: #2563EB;"></i>
+                    </div>
+                    <h3>Anglais</h3>
+                    <p>Vocabulaire, grammaire, compréhension...</p>
+                    <span class="count">76 ressources</span>
+                </a>
+                <a href="matiere-svt.html" class="subject-card">
+                    <div class="subject-icon" style="background: #DCFCE7;">
+                        <i class="fas fa-dna" style="color: #22C55E;"></i>
+                    </div>
+                    <h3>SVT</h3>
+                    <p>Biologie, géologie, écologie...</p>
+                    <span class="count">68 ressources</span>
+                </a>
+                <a href="matiere-informatique.html" class="subject-card">
+                    <div class="subject-icon" style="background: #F3E8FF;">
+                        <i class="fas fa-laptop-code" style="color: #9333EA;"></i>
+                    </div>
+                    <h3>Informatique</h3>
+                    <p>Programmation, algorithmique, réseaux...</p>
+                    <span class="count">55 ressources</span>
+                </a>
+                <a href="matiere-physique.html" class="subject-card">
+                    <div class="subject-icon" style="background: #FEF3C7;">
+                        <i class="fas fa-flask" style="color: #D97706;"></i>
+                    </div>
+                    <h3>Physique</h3>
+                    <p>Mécanique, électricité, optique...</p>
+                    <span class="count">72 ressources</span>
+                </a>
+                <a href="matiere-industrielle.html" class="subject-card">
+                    <div class="subject-icon" style="background: #E0E7FF;">
+                        <i class="fas fa-industry" style="color: #4F46E5;"></i>
+                    </div>
+                    <h3>Technologie Industrielle</h3>
+                    <p>Mécanique, électronique, automatisme...</p>
+                    <span class="count">42 ressources</span>
+                </a>
+                <a href="matiere-primaire.html" class="subject-card">
+                    <div class="subject-icon" style="background: #FCE7F3;">
+                        <i class="fas fa-child" style="color: #EC4899;"></i>
+                    </div>
+                    <h3>Enseignement Primaire</h3>
+                    <p>Lecture, calcul, découverte...</p>
+                    <span class="count">35 ressources</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <div class="logo">
+                        <i class="fas fa-graduation-cap"></i>
+                        <span>EduShare</span>
+                    </div>
+                    <p>Plateforme de partage de ressources éducatives entre étudiants.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h4>Matières</h4>
+                    <ul>
+                        <li><a href="matiere-math.html">Mathématiques</a></li>
+                        <li><a href="matiere-francais.html">Français</a></li>
+                        <li><a href="matiere-anglais.html">Anglais</a></li>
+                        <li><a href="matiere-svt.html">SVT</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Liens utiles</h4>
+                    <ul>
+                        <li><a href="apropos.html">À propos</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                        <li><a href="faq.html">FAQ</a></li>
+                        <li><a href="conditions.html">Conditions d'utilisation</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Contact</h4>
+                    <ul>
+                        <li><i class="fas fa-envelope"></i> contact@edushare.fr</li>
+                        <li><i class="fas fa-map-marker-alt"></i> Maroc</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 EduShare. Tous droits réservés.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FAQ - EduShare</title>
+    <link rel="icon" type="image/svg+xml" href="../data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📚</text></svg>">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container nav-container">
+            <a href="../index.html" class="logo">
+                <i class="fas fa-graduation-cap"></i>
+                <span>EduShare</span>
+            </a>
+            <button class="menu-toggle" id="menuToggle" aria-label="Menu">
+                <i class="fas fa-bars"></i>
+            </button>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="../index.html">Accueil</a></li>
+                <li><a href="matieres.html">Matières</a></li>
+                <li><a href="apropos.html">À propos</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <li><a href="connexion.html" class="btn btn-primary btn-sm">Espace Admin</a></li>
+                
+            </ul>
+        </div>
+    </nav>
+
+    <section class="page-hero">
+        <div class="container">
+            <span class="badge">Aide</span>
+            <h1>FAQ - Questions fréquentes</h1>
+            <p>Tout ce que vous devez savoir sur EduShare</p>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <div class="faq-list">
+                <div class="faq-item open">
+                    <div class="faq-question">
+                        <span>Comment télécharger des fichiers ?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Naviguez vers la matière qui vous intéresse, ouvrez un dossier et cliquez sur le bouton "Télécharger" à côté du fichier souhaité. Aucune limite de téléchargement !</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>Comment partager mes documents ?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Pour partager des documents, vous devez être connecté en tant qu'administrateur de la matière. Les comptes administrateurs sont créés manuellement dans Firebase.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>Comment devenir administrateur d'une matière ?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Vous pouvez faire une demande d'administration via notre page Contact. Sélectionnez "Demande d'administration" dans le sujet, indiquez la matière souhaitée et expliquez votre motivation. Nous étudierons votre demande rapidement.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>EduShare est-il gratuit ?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Oui, EduShare est totalement gratuit ! L'accès aux ressources, le téléchargement et la consultation sont libres pour tous.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>Quels types de fichiers puis-je trouver ?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Vous trouverez principalement des fichiers PDF (cours, résumés, examens), des documents Word, des présentations PowerPoint, des vidéos éducatives et des images. Chaque fichier est organisé par matière et par dossier thématique.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>Comment signaler un problème ?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Utilisez notre page Contact pour signaler un problème. Sélectionnez "Signaler un problème" dans le sujet et décrivez le souci. Notre équipe vous répondra dans les plus brefs délais.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>Mes informations sont-elles sécurisées ?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Absolument. Nous utilisons Firebase Authentication pour gérer les comptes et Vercel Blob Storage pour les fichiers. Vos données sont stockées de manière sécurisée et nous ne partageons jamais vos informations personnelles. Consultez notre <a href="confidentialite.html" style="color: var(--primary);">Politique de confidentialité</a> pour plus de détails.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section cta-section">
+        <div class="container">
+            <div class="cta-content">
+                <h2>Vous avez d'autres questions ?</h2>
+                <p>Notre équipe est là pour vous aider</p>
+                <a href="contact.html" class="btn btn-primary btn-lg">
+                    <i class="fas fa-envelope"></i> Contactez-nous
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <div class="logo">
+                        <i class="fas fa-graduation-cap"></i>
+                        <span>EduShare</span>
+                    </div>
+                    <p>Plateforme de partage de ressources éducatives entre étudiants.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h4>Matières</h4>
+                    <ul>
+                        <li><a href="matiere-math.html">Mathématiques</a></li>
+                        <li><a href="matiere-francais.html">Français</a></li>
+                        <li><a href="matiere-anglais.html">Anglais</a></li>
+                        <li><a href="matiere-svt.html">SVT</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Liens utiles</h4>
+                    <ul>
+                        <li><a href="apropos.html">À propos</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                        <li><a href="faq.html">FAQ</a></li>
+                        <li><a href="conditions.html">Conditions d'utilisation</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Contact</h4>
+                    <ul>
+                        <li><i class="fas fa-envelope"></i> contact@edushare.fr</li>
+                        <li><i class="fas fa-map-marker-alt"></i> Maroc</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 EduShare. Tous droits réservés.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../js/main.js"></script>
+</body>
+</html>
