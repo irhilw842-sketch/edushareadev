@@ -1,15 +1,27 @@
 /* ============================================
    EduShare - Firebase Configuration
    ============================================ */
+// Import the functions you need from the SDKs you need
+import { initializeApp } from "firebase/app";
+import { getAnalytics } from "firebase/analytics";
+// TODO: Add SDKs for Firebase products that you want to use
+// https://firebase.google.com/docs/web/setup#available-libraries
 
+// Your web app's Firebase configuration
+// For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-    apiKey: "VOTRE_API_KEY",
-    authDomain: "VOTRE_PROJECT.firebaseapp.com",
-    projectId: "VOTRE_PROJECT_ID",
-    storageBucket: "VOTRE_PROJECT.appspot.com",
-    messagingSenderId: "VOTRE_SENDER_ID",
-    appId: "VOTRE_APP_ID"
+  apiKey: "AIzaSyA_B32KxGmbO0mY60edPUL9u1xBXjM2YHo",
+  authDomain: "edushare-8f39b.firebaseapp.com",
+  projectId: "edushare-8f39b",
+  storageBucket: "edushare-8f39b.firebasestorage.app",
+  messagingSenderId: "374595933733",
+  appId: "1:374595933733:web:5a34bab9240254ae6291cc",
+  measurementId: "G-VGE9J7S7JW"
 };
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const analytics = getAnalytics(app);
 
 firebase.initializeApp(firebaseConfig);
 
