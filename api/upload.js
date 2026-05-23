@@ -1,11 +1,11 @@
 import { put, list, del } from '@vercel/blob';
-import { NextResponse } from 'next/server';
-import express from "express";
+
 export const config = {
-    runtime: 'edge',
+    runtime: 'nodejs',
 };
 
-export default async function handler(request) {
+export default async function handler(request, response) {
+
     if (request.method === 'POST') {
         try {
             const formData = await request.formData();
@@ -14,7 +14,9 @@ export default async function handler(request) {
             const folder = formData.get('folder');
 
             if (!file || !subject || !folder) {
-                return NextResponse.json({ error: 'Fichier, matière et dossier requis' }, { status: 400 });
+                return response.status(400).json({
+                    error: 'Fichier, matière et dossier requis'
+                });
             }
 
             const timestamp = Date.now();
@@ -26,45 +28,57 @@ export default async function handler(request) {
                 addRandomSuffix: false,
             });
 
-            return NextResponse.json({
+            return response.status(200).json({
                 success: true,
                 url: blob.url,
                 pathname: blob.pathname,
-                fileName: fileName,
-                subject: subject,
-                folder: folder,
+                fileName,
+                subject,
+                folder,
                 uploadedAt: new Date().toISOString()
             });
 
         } catch (error) {
-            return NextResponse.json({ error: error.message }, { status: 500 });
+            return response.status(500).json({
+                error: error.message
+            });
         }
     }
 
     if (request.method === 'DELETE') {
         try {
-            const { url } = await request.json();
+            const { url } = request.body;
+
             await del(url);
-            return NextResponse.json({ success: true });
+
+            return response.status(200).json({
+                success: true
+            });
+
         } catch (error) {
-            return NextResponse.json({ error: error.message }, { status: 500 });
+            return response.status(500).json({
+                error: error.message
+            });
         }
     }
 
     if (request.method === 'GET') {
         try {
-            const { searchParams } = new URL(request.url);
-            const subject = searchParams.get('subject');
+            const subject = request.query.subject;
 
             let blobList;
+
             if (subject) {
-                blobList = await list({ prefix: `${subject}/` });
+                blobList = await list({
+                    prefix: `${subject}/`
+                });
             } else {
                 blobList = await list();
             }
 
             const files = blobList.blobs.map(blob => {
                 const parts = blob.pathname.split('/');
+
                 return {
                     url: blob.url,
                     pathname: blob.pathname,
@@ -77,12 +91,16 @@ export default async function handler(request) {
                 };
             });
 
-            return NextResponse.json({ files });
+            return response.status(200).json({ files });
 
         } catch (error) {
-            return NextResponse.json({ error: error.message }, { status: 500 });
+            return response.status(500).json({
+                error: error.message
+            });
         }
     }
 
-    return NextResponse.json({ error: 'Method not allowed' }, { status: 405 });
+    return response.status(405).json({
+        error: 'Method not allowed'
+    });
 }
