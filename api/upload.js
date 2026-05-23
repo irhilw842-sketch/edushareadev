@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /**
  * EduShare – api/upload.js  (Vercel Edge Function)
  * ================================================
@@ -204,4 +205,31 @@ export default async function handler(request) {
         default:
             return err(`Méthode ${request.method} non supportée.`, 405, 'METHOD_NOT_ALLOWED');
     }
+=======
+import { put } from '@vercel/blob';
+
+export default async function handler(req, res) {
+  if (req.method !== 'POST') {
+    return res.status(405).json({
+      error: 'Method not allowed',
+    });
+  }
+
+  try {
+    const blob = await put(
+      'test.txt',
+      'hello world',
+      {
+        access: 'public',
+      }
+    );
+
+    return res.status(200).json(blob);
+
+  } catch (error) {
+    return res.status(500).json({
+      error: error.message,
+    });
+  }
+>>>>>>> a3ce2a9c38f867d92db122e39b7ff277af59149e
 }
